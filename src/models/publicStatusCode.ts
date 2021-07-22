@@ -6,4 +6,4 @@ const statusCode = {
       internal_error: 500,
     },
   };
-  export default statusCode;
+  export default statusCode; 
