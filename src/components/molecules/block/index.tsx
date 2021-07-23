@@ -88,6 +88,8 @@ const Block: React.FC<IProps> = ({
     padding: CalculateBox(padding),
   };
 
+  console.log(style);
+
   return (
     <div className={classProps} style={styleProps}>
       {children}

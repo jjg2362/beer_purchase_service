@@ -13,7 +13,7 @@ export enum WHITE {
 };
 
 export enum RED {
-    RED = '#FF0000'
+    RED = '#EF5350'
 };
 
 export enum BLUE {

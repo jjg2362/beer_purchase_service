@@ -1,13 +1,13 @@
 import React from "react";
 import "./app.css";
-import useFetchBeers from "./hooks/useFetchBeers";
-import useFetchTags from "./hooks/useFetchTags";
+import AddBeerPage from "./pages/addBeerPage";
 
 const App: React.FC = () => {
-  const { beerList } = useFetchBeers();
-  const { tagList } = useFetchTags();
-
-  return <div></div>;
+  return (
+    <>
+      <AddBeerPage />
+    </>
+  );
 };
 
 export default App;

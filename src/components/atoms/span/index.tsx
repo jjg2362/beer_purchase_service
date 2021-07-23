@@ -20,6 +20,7 @@ interface IProps {
   size?: number;
   margin?: [number, number?, number?, number?];
   align?: TextAlign;
+  style?: object;
 }
 
 const Span: React.FC<IProps> = ({
@@ -31,9 +32,11 @@ const Span: React.FC<IProps> = ({
   size = 12,
   margin = [0],
   align = TextAlign.LEFT,
+  style,
 }) => {
   const classProps = classNames(styles.default, className);
   const styleProps = {
+    ...style,
     fontSize: size,
     color,
     fontWeight: weight,

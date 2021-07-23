@@ -7,7 +7,9 @@ import { CalculateBox } from "../../../utils";
 
 interface IProps {
   children: React.ReactNode;
+  onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
   className?: string;
+  isCapture?: boolean;
   weight?: number;
   color?: ColorType;
   size?: number;
@@ -20,6 +22,7 @@ interface IProps {
 const Button: React.FC<IProps> = ({
   children,
   className,
+  isCapture = false,
   weight = 300,
   color = ColorPalette.Black.BLACK,
   size = 12,
@@ -27,6 +30,7 @@ const Button: React.FC<IProps> = ({
   radius = 0,
   margin = [0],
   padding = [0],
+  onClick,
 }) => {
   const classProps = classNames(styles.default, className);
   const styleProps = {
@@ -38,9 +42,10 @@ const Button: React.FC<IProps> = ({
     margin: CalculateBox(margin),
     padding: CalculateBox(padding),
   };
+  let clickEvent = isCapture ? { onClickCapture: onClick } : { onClick };
 
   return (
-    <button className={classProps} style={styleProps}>
+    <button {...clickEvent} className={classProps} style={styleProps}>
       {children}
     </button>
   );
