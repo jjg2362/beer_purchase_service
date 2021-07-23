@@ -1,4 +1,5 @@
 export enum GRAY {
+    GAINSBORO = '#F2F3F7',
     LIGHT = 'EBEBED',
     GRAY = '#95959E',
 };
