@@ -14,16 +14,20 @@ interface IProps {
   totalBeerCount: number;
   beerList: IBeer[];
   tagList: ITag[];
+  selectedTagLists: ITag[];
   onAddItem(item: IBeer): void;
   onSubItem(item: IBeer): void;
+  onClickTag(item: ITag): void;
 }
 
 const AddBeer: React.FC<IProps> = ({
   totalBeerCount,
   beerList,
   tagList,
+  selectedTagLists,
   onAddItem,
   onSubItem,
+  onClickTag,
 }) => {
   return (
     <Block
@@ -38,7 +42,11 @@ const AddBeer: React.FC<IProps> = ({
     >
       <Header beerCount={totalBeerCount} />
       <Block direction={Direction.COLUMN} padding={[10, 0]}>
-        <TagList tagList={tagList} />
+        <TagList
+          tagList={tagList}
+          selectedTagLists={selectedTagLists}
+          onClickTag={onClickTag}
+        />
         <Block direction={Direction.COLUMN}>
           <BeerList
             beerList={beerList}
