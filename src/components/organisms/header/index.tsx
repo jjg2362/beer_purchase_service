@@ -3,8 +3,8 @@ import React, { useState, useCallback } from "react";
 import { ColorPalette } from "../../../models/color";
 import Block from "../../molecules/block";
 import P from "../../atoms/p";
-import CartButton from "../../molecules/CartButton";
-import ListButton from "../../molecules/ListButton";
+import CartButton from "../../molecules/cartButton";
+import ListButton from "../../molecules/listButton";
 
 enum EPageState {
   LIST,

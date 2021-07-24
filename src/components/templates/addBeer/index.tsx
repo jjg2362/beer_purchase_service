@@ -6,8 +6,8 @@ import { ColorPalette } from "../../../models/color";
 import Header from "../../organisms/header";
 import Block, { Direction } from "../../molecules/block";
 import TagList from "../../organisms/tagList";
+import BeerList from "../../organisms/beerList";
 import styles from "./style.module.css";
-import BeerList from "../../organisms/BeerList";
 
 interface IProps {
   beerList: IBeer[];

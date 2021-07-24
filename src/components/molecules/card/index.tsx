@@ -21,6 +21,7 @@ const Card: React.FC<IProps> = ({ beer }) => {
         backgroundColor: ColorPalette.White.WHITE,
         boxShadow: "1px 1px 4px 1px rgba(0, 0, 0, 0.05)",
       }}
+      margin={[0, 0, 10, 0]}
     >
       <Block sort={61}>
         <Block
@@ -31,7 +32,7 @@ const Card: React.FC<IProps> = ({ beer }) => {
             flex: "0 0 56px",
           }}
         >
-          <Image src="/img/cass.jpg" alt={beer.name} />
+          <Image src={`/img/${beer.image}`} alt={beer.name} />
         </Block>
         <Block
           sort={41}
