@@ -56,11 +56,13 @@ const CalculateSort = (sort: Sort): string[] => {
   else if (horizontalNumber === 3) horizontal = "flex-end";
   else if (horizontalNumber === 4) horizontal = "space-between";
   else if (horizontalNumber === 5) horizontal = "space-around";
+  else if (horizontalNumber === 6) horizontal = "stretch";
 
   if (verticalNumber === 1) vertical = "flex-start";
   else if (verticalNumber === 3) vertical = "flex-end";
   else if (verticalNumber === 4) vertical = "space-between";
   else if (verticalNumber === 5) vertical = "space-around";
+  else if (verticalNumber === 6) vertical = "stretch";
 
   return [horizontal, vertical];
 };
