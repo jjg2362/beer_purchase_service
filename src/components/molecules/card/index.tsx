@@ -3,15 +3,15 @@ import { ColorPalette } from "../../../models/color";
 import { IBeer } from "../../../models/types";
 import P from "../../atoms/p";
 import Span from "../../atoms/span";
-import Button from "../../atoms/button";
 import Image from "../../atoms/image";
 import Block, { Direction } from "../block";
 
 interface IProps {
   beer: IBeer;
+  Buttons: React.ReactNode[];
 }
 
-const Card: React.FC<IProps> = ({ beer }) => {
+const Card: React.FC<IProps> = ({ beer, Buttons }) => {
   return (
     <Block
       direction={Direction.COLUMN}
@@ -70,21 +70,25 @@ const Card: React.FC<IProps> = ({ beer }) => {
             <Span color={ColorPalette.Black.LIGHT} size={14} weight={400}>
               {beer.stock}
             </Span>
+
+            {beer.count !== undefined && beer.count > 0 && (
+              <>
+                <Span
+                  color={ColorPalette.Black.LIGHT}
+                  size={14}
+                  margin={[0, 4, 0, 6]}
+                >
+                  수량
+                </Span>
+                <Span color={ColorPalette.Black.LIGHT} size={14} weight={400}>
+                  {beer.count}
+                </Span>
+              </>
+            )}
           </Block>
         </Block>
       </Block>
-      <Block sort={13}>
-        <Button
-          bgColor={ColorPalette.Blue.BLUE}
-          color={ColorPalette.White.WHITE}
-          size={12}
-          weight={300}
-          padding={[10, 12]}
-          radius={4}
-        >
-          담기
-        </Button>
-      </Block>
+      <Block sort={13}>{Buttons.map((button) => button)}</Block>
     </Block>
   );
 };

@@ -6,7 +6,7 @@ const requestOptions: RequestInit = {
     redirect: 'follow'
   };
 
-const useFetchBeers = () : {beerList : IBeer[]} => {
+const useFetchBeers = () : {beerList : IBeer[], setBeerList: (beerList: IBeer[]) => void} => {
   const [beerList, setBeerList] = useState<IBeer[]>([])
   
   useEffect(() => {
@@ -18,7 +18,8 @@ const useFetchBeers = () : {beerList : IBeer[]} => {
   }, [])
 
   return {
-    beerList
+    beerList,
+    setBeerList
   }
 }
 

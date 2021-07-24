@@ -13,10 +13,16 @@ import Button from "../../atoms/button";
 interface IProps {
   beerList: IBeer[];
   tagList: ITag[];
+  onAddItem(item: IBeer): void;
+  onSubItem(item: IBeer): void;
 }
 
-const AddBeer: React.FC<IProps> = ({ beerList, tagList }) => {
-  console.log(beerList);
+const AddBeer: React.FC<IProps> = ({
+  beerList,
+  tagList,
+  onAddItem,
+  onSubItem,
+}) => {
   return (
     <Block
       direction={Direction.COLUMN}
@@ -32,7 +38,11 @@ const AddBeer: React.FC<IProps> = ({ beerList, tagList }) => {
       <Block direction={Direction.COLUMN} padding={[10, 0]}>
         <TagList tagList={tagList} />
         <Block direction={Direction.COLUMN}>
-          <BeerList beerList={beerList} />
+          <BeerList
+            beerList={beerList}
+            onAddItem={onAddItem}
+            onSubItem={onSubItem}
+          />
           <Button
             color={ColorPalette.Gray.GRAY}
             weight={700}

@@ -1,4 +1,5 @@
 import React from "react";
+import { memo } from "react";
 import { ColorPalette } from "../../../models/color";
 import { ITag } from "../../../models/types";
 import Button from "../../atoms/button";
@@ -8,7 +9,7 @@ interface IProps {
   tagList: ITag[];
 }
 
-const TagList: React.FC<IProps> = ({ tagList }) => {
+const TagList: React.FC<IProps> = memo(({ tagList }) => {
   return (
     <Scrollable
       scrollType={ScrollType.HORIZONTAL}
@@ -33,6 +34,6 @@ const TagList: React.FC<IProps> = ({ tagList }) => {
       })}
     </Scrollable>
   );
-};
+});
 
 export default TagList;

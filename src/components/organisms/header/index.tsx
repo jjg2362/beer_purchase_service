@@ -6,6 +6,7 @@ import P from "../../atoms/p";
 import CartButton from "../../molecules/cartButton";
 import ListButton from "../../molecules/listButton";
 import Sticky from "../../molecules/sticky";
+import { memo } from "react";
 
 enum EPageState {
   LIST,
@@ -16,7 +17,7 @@ interface IProps {
   beerCount: number;
 }
 
-const Header: React.FC<IProps> = ({ beerCount }) => {
+const Header: React.FC<IProps> = memo(({ beerCount }) => {
   const [pageState, setPageState] = useState<EPageState>(EPageState.LIST);
 
   const onClickCartButton = useCallback(() => {
@@ -59,6 +60,6 @@ const Header: React.FC<IProps> = ({ beerCount }) => {
       </Block>
     </Sticky>
   );
-};
+});
 
 export default Header;

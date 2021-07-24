@@ -7,7 +7,7 @@ import { CalculateBox } from "../../../utils";
 
 interface IProps {
   children: React.ReactNode;
-  onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
+  onClick?: any;
   className?: string;
   isCapture?: boolean;
   weight?: number;
@@ -17,6 +17,7 @@ interface IProps {
   radius?: number;
   margin?: [number, number?, number?, number?];
   padding?: [number, number?, number?, number?];
+  disabled?: boolean;
   style?: object;
 }
 
@@ -32,6 +33,7 @@ const Button: React.FC<IProps> = ({
   margin = [0],
   padding = [0],
   onClick,
+  disabled = false,
   style,
 }) => {
   const classProps = classNames(styles.default, className);
@@ -48,7 +50,12 @@ const Button: React.FC<IProps> = ({
   let clickEvent = isCapture ? { onClickCapture: onClick } : { onClick };
 
   return (
-    <button {...clickEvent} className={classProps} style={styleProps}>
+    <button
+      {...clickEvent}
+      className={classProps}
+      style={styleProps}
+      disabled={disabled}
+    >
       {children}
     </button>
   );
