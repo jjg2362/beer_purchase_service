@@ -1,12 +1,12 @@
 import React from "react";
 import classNames from "classnames";
 
+import { ITag } from "../../../models/types";
+import { ColorPalette } from "../../../models/color";
 import Header from "../../organisms/header";
 import Block, { Direction } from "../../molecules/block";
-import { ColorPalette } from "../../../models/color";
+import TagList from "../../organisms/tagList";
 import styles from "./style.module.css";
-import TagList from "../../organisms/TagList";
-import { ITag } from "../../../models/types";
 
 interface IProps {
   tagList: ITag[];
