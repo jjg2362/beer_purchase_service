@@ -16,8 +16,8 @@ export interface IBeer {
     tags: ITag[],
     price: number,
     stock: number,
-    count: number,
-    priority: number,
+    count?: number,
+    priority?: number,
 };
 
 export interface IPurchaseItem {
