@@ -33,14 +33,14 @@ const ListButton: React.FC<IProps> = ({ isOn, onClick }) => {
             <g
               id="Welcome"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             >
               <g
                 id="맥주-목록-페이지-2"
                 transform="translate(-242.000000, -30.000000)"
-                fill-rule="nonzero"
+                fillRule="nonzero"
               >
                 <g id="Header">
                   <path
@@ -64,14 +64,14 @@ const ListButton: React.FC<IProps> = ({ isOn, onClick }) => {
             <g
               id="Welcome"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             >
               <g
                 id="맥주-목록-페이지-2"
                 transform="translate(-248.000000, -18.000000)"
-                fill-rule="nonzero"
+                fillRule="nonzero"
               >
                 <g id="Header">
                   <path
@@ -96,14 +96,14 @@ const ListButton: React.FC<IProps> = ({ isOn, onClick }) => {
             <g
               id="Welcome"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             >
               <g
                 id="맥주-목록-페이지-2"
                 transform="translate(-242.000000, -30.000000)"
-                fill-rule="nonzero"
+                fillRule="nonzero"
               >
                 <g id="Header">
                   <path
@@ -127,14 +127,14 @@ const ListButton: React.FC<IProps> = ({ isOn, onClick }) => {
             <g
               id="Welcome"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             >
               <g
                 id="맥주-목록-페이지-2"
                 transform="translate(-248.000000, -18.000000)"
-                fill-rule="nonzero"
+                fillRule="nonzero"
               >
                 <g id="Header">
                   <path
@@ -159,14 +159,14 @@ const ListButton: React.FC<IProps> = ({ isOn, onClick }) => {
             <g
               id="Welcome"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             >
               <g
                 id="맥주-목록-페이지-2"
                 transform="translate(-242.000000, -30.000000)"
-                fill-rule="nonzero"
+                fillRule="nonzero"
               >
                 <g id="Header">
                   <path
@@ -190,14 +190,14 @@ const ListButton: React.FC<IProps> = ({ isOn, onClick }) => {
             <g
               id="Welcome"
               stroke="none"
-              stroke-width="1"
+              strokeWidth="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             >
               <g
                 id="맥주-목록-페이지-2"
                 transform="translate(-248.000000, -18.000000)"
-                fill-rule="nonzero"
+                fillRule="nonzero"
               >
                 <g id="Header">
                   <path

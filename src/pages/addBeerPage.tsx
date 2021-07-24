@@ -8,11 +8,7 @@ const AddBeerPage = () => {
   const { beerList } = useFetchBeers();
   const { tagList } = useFetchTags();
 
-  return (
-    <>
-      <AddBeer />
-    </>
-  );
+  return <>{tagList !== undefined && <AddBeer tagList={tagList} />}</>;
 };
 
 export default AddBeerPage;

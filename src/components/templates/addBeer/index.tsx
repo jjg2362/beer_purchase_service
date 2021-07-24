@@ -5,10 +5,14 @@ import Header from "../../organisms/header";
 import Block, { Direction } from "../../molecules/block";
 import { ColorPalette } from "../../../models/color";
 import styles from "./style.module.css";
+import TagList from "../../organisms/TagList";
+import { ITag } from "../../../models/types";
 
-interface IProps {}
+interface IProps {
+  tagList: ITag[];
+}
 
-const AddBeer: React.FC<IProps> = () => {
+const AddBeer: React.FC<IProps> = ({ tagList }) => {
   return (
     <Block
       direction={Direction.COLUMN}
@@ -22,6 +26,7 @@ const AddBeer: React.FC<IProps> = () => {
       }}
     >
       <Header beerCount={0} />
+      <TagList tagList={tagList} />
     </Block>
   );
 };

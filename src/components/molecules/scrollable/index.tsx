@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-import Block, { Direction, Sort } from "../../molecules/block";
+import Block, { Direction, Sort } from "../block";
 import styles from "./style.module.css";
 
 export enum ScrollType {
@@ -29,9 +29,9 @@ const Scrollable: React.FC<IProps> = ({
   children,
   scrollType = ScrollType.HORIZONTAL,
   viewType = ViewType.WRAP,
-  padding,
-  margin,
-  innerPadding,
+  padding = [0],
+  margin = [0],
+  innerPadding = [0],
 }) => {
   const classProps = classNames(styles.default, className);
 
@@ -39,8 +39,6 @@ const Scrollable: React.FC<IProps> = ({
     [scrollType === ScrollType.HORIZONTAL ? "overflowX" : "overflowY"]:
       viewType === ViewType.OVERFLOW ? "auto" : "visible",
     flexWrap: ViewType.WRAP ? "wrap" : "nowrap",
-    margin,
-    padding,
   };
 
   return (
@@ -49,6 +47,8 @@ const Scrollable: React.FC<IProps> = ({
       style={styleProps}
       direction={Direction.COLUMN}
       sort={Sort.TOP_LEFT}
+      margin={margin}
+      padding={padding}
     >
       <Block
         sort={Sort.TOP_LEFT}

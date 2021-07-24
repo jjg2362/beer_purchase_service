@@ -48,14 +48,14 @@ const CartButton: React.FC<IProps> = ({ isOn, beerCount, onClick }) => {
           <g
             id="Welcome"
             stroke="none"
-            stroke-width="1"
+            strokeWidth="1"
             fill="none"
-            fill-rule="evenodd"
+            fillRule="evenodd"
           >
             <g
               id="beer-icon"
               transform="translate(-279.000000, -16.000000)"
-              fill-rule="nonzero"
+              fillRule="nonzero"
             >
               <g id="Header" className={classNames(styles.icon)}>
                 <path
