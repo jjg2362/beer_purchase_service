@@ -13,7 +13,7 @@ const TagList: React.FC<IProps> = ({ tagList }) => {
     <Scrollable
       scrollType={ScrollType.HORIZONTAL}
       viewType={ViewType.OVERFLOW}
-      margin={[10, 0]}
+      margin={[0, 0, 10, 0]}
       padding={[0, 0, 0, 20]}
     >
       {tagList.map((item, index) => {
