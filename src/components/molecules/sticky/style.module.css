@@ -1,2 +1,4 @@
 .default {
+  width: 100%;
+  position: sticky;
 }

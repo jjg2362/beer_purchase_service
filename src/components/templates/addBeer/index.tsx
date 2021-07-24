@@ -24,7 +24,6 @@ const AddBeer: React.FC<IProps> = ({ beerList, tagList }) => {
         width: "100%",
         maxWidth: "320px",
         minHeight: "100vh",
-        overflow: "hidden",
         backgroundColor: ColorPalette.Gray.GAINSBORO,
       }}
     >
