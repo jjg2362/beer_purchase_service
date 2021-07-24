@@ -17,6 +17,7 @@ interface IProps {
   radius?: number;
   margin?: [number, number?, number?, number?];
   padding?: [number, number?, number?, number?];
+  style?: object;
 }
 
 const Button: React.FC<IProps> = ({
@@ -31,9 +32,11 @@ const Button: React.FC<IProps> = ({
   margin = [0],
   padding = [0],
   onClick,
+  style,
 }) => {
   const classProps = classNames(styles.default, className);
   const styleProps = {
+    ...style,
     fontSize: size,
     color,
     fontWeight: weight,
