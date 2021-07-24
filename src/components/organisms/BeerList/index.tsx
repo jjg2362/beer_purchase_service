@@ -14,7 +14,6 @@ interface IProps {
 
 const BeerList: React.FC<IProps> = ({ beerList, onAddItem, onSubItem }) => {
   const renderBeerCard = (item: IBeer) => {
-    console.log(item.stock);
     return (
       <Card
         key={item.id}

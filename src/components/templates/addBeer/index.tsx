@@ -11,6 +11,7 @@ import styles from "./style.module.css";
 import Button from "../../atoms/button";
 
 interface IProps {
+  totalBeerCount: number;
   beerList: IBeer[];
   tagList: ITag[];
   onAddItem(item: IBeer): void;
@@ -18,6 +19,7 @@ interface IProps {
 }
 
 const AddBeer: React.FC<IProps> = ({
+  totalBeerCount,
   beerList,
   tagList,
   onAddItem,
@@ -34,7 +36,7 @@ const AddBeer: React.FC<IProps> = ({
         backgroundColor: ColorPalette.Gray.GAINSBORO,
       }}
     >
-      <Header beerCount={0} />
+      <Header beerCount={totalBeerCount} />
       <Block direction={Direction.COLUMN} padding={[10, 0]}>
         <TagList tagList={tagList} />
         <Block direction={Direction.COLUMN}>

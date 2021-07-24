@@ -21,7 +21,6 @@ const AddBeerPage = () => {
           return beerItem;
         });
         setBeerList(lists);
-        console.log(stock);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,8 +49,9 @@ const AddBeerPage = () => {
 
   return (
     <>
-      {tagList !== undefined && (
+      {tagList !== undefined && tagList !== undefined && (
         <AddBeer
+          totalBeerCount={beerList.filter((v) => v.count && v.count > 0).length}
           beerList={beerList}
           tagList={tagList}
           onAddItem={onAddItem}
