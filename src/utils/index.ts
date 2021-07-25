@@ -11,3 +11,12 @@ export function CalculateBox(targetArr: [number, number?, number?, number?]): st
     
     return `${resultArr.toString().replace(/,/gi, 'px ')}px`
   }
+
+  export const formatNumberToComma = (number: number): string => {
+    if (Number.isNaN(number)) {
+      return '0';
+    }
+    const formattedNumber = parseInt(Number(number).toString().replace(/\D/g, ''), 10);
+    const comma = formattedNumber.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    return comma;
+  };

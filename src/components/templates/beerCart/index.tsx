@@ -1,5 +1,6 @@
-import React from "react";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
+
+import { formatNumberToComma } from "../../../utils";
 import { ColorPalette } from "../../../models/color";
 import { IBeer, IPurchaseItem, IPurchaseResult } from "../../../models/types";
 import Button from "../../atoms/button";
@@ -195,7 +196,7 @@ const BeerCart: React.FC<IProps> = ({
                   margin={[0, 3, 0, 0]}
                   weight={700}
                 >
-                  {totalPrice.totalCount}
+                  {formatNumberToComma(totalPrice.totalCount)}
                 </Span>
                 <Span size={20} color={ColorPalette.Gray.DARK}>
                   개
@@ -215,7 +216,7 @@ const BeerCart: React.FC<IProps> = ({
                   margin={[0, 3, 0, 0]}
                   weight={700}
                 >
-                  {totalPrice.totalPrice}
+                  {formatNumberToComma(totalPrice.totalPrice)}
                 </Span>
                 <Span size={20} color={ColorPalette.Gray.DARK}>
                   원

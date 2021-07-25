@@ -1,4 +1,6 @@
 import React from "react";
+
+import { formatNumberToComma } from "../../../utils";
 import { ColorPalette } from "../../../models/color";
 import { IBeer } from "../../../models/types";
 import P from "../../atoms/p";
@@ -57,7 +59,7 @@ const Card: React.FC<IProps> = ({ beer, stock, count, ButtonElements }) => {
           </Block>
           <Block sort={21}>
             <Span size={16} weight={700} color={ColorPalette.Blue.STALE}>
-              {beer.price}
+              {formatNumberToComma(beer.price)}
             </Span>
             <Span weight={400}>원</Span>
           </Block>
@@ -72,7 +74,7 @@ const Card: React.FC<IProps> = ({ beer, stock, count, ButtonElements }) => {
                   재고
                 </Span>
                 <Span color={ColorPalette.Black.LIGHT} size={14} weight={400}>
-                  {stock}
+                  {formatNumberToComma(stock)}
                 </Span>
               </>
             )}
@@ -87,7 +89,7 @@ const Card: React.FC<IProps> = ({ beer, stock, count, ButtonElements }) => {
                   수량
                 </Span>
                 <Span color={ColorPalette.Black.LIGHT} size={14} weight={400}>
-                  {count}
+                  {formatNumberToComma(count)}
                 </Span>
               </>
             )}
