@@ -2,6 +2,7 @@ export enum GRAY {
     GAINSBORO = '#F2F3F7',
     LIGHT = '#EBEBED',
     GRAY = '#95959E',
+    DARK = '#6E6E78',
 };
 
 export enum BLACK {

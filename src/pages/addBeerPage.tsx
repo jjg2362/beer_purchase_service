@@ -115,23 +115,18 @@ const AddBeerPage: React.FC = () => {
     setDisplayedBeerCount(displayedBeerCount + INCREASE_BEER_COUNT);
   }, [displayedBeerCount]);
 
-  const onClickCancelButton = useCallback((item: IBeer) => {
-    // if (sortedBeerLists !== null) {
-    //   const lists = sortedBeerLists.map((beerItem) => {
-    //     if (beerItem.id === item.id) {
-    //       const stock = item.stock + item.count!;
-    //       const count = 0;
-    //       return {
-    //         ...beerItem,
-    //         stock,
-    //         count,
-    //       };
-    //     }
-    //     return beerItem;
-    //   });
-    //   setSortedBeerLists(lists);
-    // }
-  }, []);
+  const onClickCancelButton = useCallback(
+    (item: IBeer) => {
+      const foundCartIndex = myCart.findIndex((v) => v.id === item.id);
+
+      if (foundCartIndex > -1) {
+        const cart = [...myCart];
+        cart.splice(foundCartIndex, 1);
+        setMyCart(cart);
+      }
+    },
+    [myCart]
+  );
 
   const onClickCartButton = useCallback(() => {
     if (pageState !== EPageState.CART) {
@@ -180,6 +175,7 @@ const AddBeerPage: React.FC = () => {
             beerList={beerList}
             myCart={myCart}
             onClickCancelButton={onClickCancelButton}
+            onClickListButton={onClickListButton}
           />
         )}
       </Block>
