@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import { IBeer, ITag } from "../models/types";
+import { IBeer, ITag, EPageState } from "../models/types";
 import useFetchBeers from "../hooks/useFetchBeers";
 import useFetchTags from "../hooks/useFetchTags";
 import AddBeer from "../components/templates/addBeer";
@@ -14,6 +14,7 @@ const AddBeerPage: React.FC = () => {
   const [sortedBeerLists, setSortedBeerLists] = useState<IBeer[]>([]);
   const [displayedBeerCount, setDisplayedBeerCount] =
     useState<number>(INCREASE_BEER_COUNT);
+  const [pageState, setPageState] = useState<EPageState>(EPageState.LIST);
 
   /*
   selectedTagLists 또는 beerList 변경시 선택된 태그에 따라 priority값 변경한 객체를 sortedBeerLists에 할당
@@ -101,6 +102,8 @@ const AddBeerPage: React.FC = () => {
 
   /*
   태그 버튼 클릭시 동작
+  태그 버튼을 토글하고, 최대 출력 아이템 갯수를 기본으로 초기화한다.
+  맥주 리스트를 정렬한다.
   */
   const onClickTag = useCallback(
     (item: ITag) => {
@@ -122,19 +125,38 @@ const AddBeerPage: React.FC = () => {
     [selectedTagLists, sortBeerList]
   );
 
+  /*
+  더보기 버튼 클릭시 동작
+  최대 출력 아이템 갯수를 다섯 개 늘린다.
+  */
   const onClickMoreButton = useCallback(() => {
     setDisplayedBeerCount(displayedBeerCount + INCREASE_BEER_COUNT);
   }, [displayedBeerCount]);
+
+  const onClickCartButton = useCallback(() => {
+    if (pageState !== EPageState.CART) {
+      setPageState(EPageState.CART);
+    }
+  }, [pageState]);
+
+  const onClickListButton = useCallback(() => {
+    if (pageState !== EPageState.LIST) {
+      setPageState(EPageState.LIST);
+    }
+  }, [pageState]);
 
   return (
     <>
       {tagList !== undefined && selectedTagLists !== null && (
         <AddBeer
-          totalBeerCount={beerList.filter((v) => v.count! > 0).length}
+          pageState={pageState}
+          totalBeerCount={sortedBeerLists.filter((v) => v.count! > 0).length}
           beerList={sortedBeerLists}
           tagList={tagList}
           selectedTagLists={selectedTagLists}
           displayedBeerCount={displayedBeerCount}
+          onClickCartButton={onClickCartButton}
+          onClickListButton={onClickListButton}
           onAddItem={onAddItem}
           onSubItem={onSubItem}
           onClickTag={onClickTag}

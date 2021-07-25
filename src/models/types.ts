@@ -34,3 +34,8 @@ export interface IInternalErrorMessage {
     title: string,
     reason: string,
 };
+
+export enum EPageState {
+    LIST,
+    CART,
+  }

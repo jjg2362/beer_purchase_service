@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-import { IBeer, ITag } from "../../../models/types";
+import { EPageState, IBeer, ITag } from "../../../models/types";
 import { ColorPalette } from "../../../models/color";
 import Header from "../../organisms/header";
 import Block, { Direction } from "../../molecules/block";
@@ -11,11 +11,14 @@ import Button from "../../atoms/button";
 import styles from "./style.module.css";
 
 interface IProps {
+  pageState: EPageState;
   totalBeerCount: number;
   beerList: IBeer[];
   tagList: ITag[];
   selectedTagLists: ITag[];
   displayedBeerCount: number;
+  onClickCartButton(): void;
+  onClickListButton(): void;
   onAddItem(item: IBeer): void;
   onSubItem(item: IBeer): void;
   onClickTag(item: ITag): void;
@@ -23,29 +26,28 @@ interface IProps {
 }
 
 const AddBeer: React.FC<IProps> = ({
+  pageState,
   totalBeerCount,
   beerList,
   tagList,
   selectedTagLists,
   displayedBeerCount,
+  onClickCartButton,
+  onClickListButton,
   onAddItem,
   onSubItem,
   onClickTag,
   onClickMoreButton,
 }) => {
-  return (
-    <Block
-      direction={Direction.COLUMN}
-      sort={12}
-      style={{
-        width: "100%",
-        maxWidth: "540px",
-        minHeight: "100vh",
-        backgroundColor: ColorPalette.Gray.GAINSBORO,
-      }}
-    >
-      <Header beerCount={totalBeerCount} />
-      <Block direction={Direction.COLUMN} padding={[10, 0]}>
+  const renderList = () => {
+    const filteredBeerLists = beerList.slice(
+      0,
+      displayedBeerCount > beerList.length
+        ? beerList.length
+        : displayedBeerCount
+    );
+    return (
+      <>
         <TagList
           tagList={tagList}
           selectedTagLists={selectedTagLists}
@@ -53,12 +55,7 @@ const AddBeer: React.FC<IProps> = ({
         />
         <Block direction={Direction.COLUMN}>
           <BeerList
-            beerList={beerList.slice(
-              0,
-              displayedBeerCount > beerList.length
-                ? beerList.length
-                : displayedBeerCount
-            )}
+            beerList={filteredBeerLists}
             onAddItem={onAddItem}
             onSubItem={onSubItem}
           />
@@ -80,6 +77,41 @@ const AddBeer: React.FC<IProps> = ({
             </Button>
           )}
         </Block>
+      </>
+    );
+  };
+
+  const renderCart = () => {
+    const filteredBeerLists = beerList.filter((v) => v.count! > 0);
+
+    return (
+      <BeerList
+        beerList={filteredBeerLists}
+        onAddItem={onAddItem}
+        onSubItem={onSubItem}
+      />
+    );
+  };
+
+  return (
+    <Block
+      direction={Direction.COLUMN}
+      sort={12}
+      style={{
+        width: "100%",
+        maxWidth: "540px",
+        minHeight: "100vh",
+        backgroundColor: ColorPalette.Gray.GAINSBORO,
+      }}
+    >
+      <Header
+        pageState={pageState}
+        beerCount={totalBeerCount}
+        onClickCartButton={onClickCartButton}
+        onClickListButton={onClickListButton}
+      />
+      <Block direction={Direction.COLUMN} padding={[10, 0]}>
+        {pageState === EPageState.LIST ? renderList() : renderCart()}
       </Block>
     </Block>
   );
