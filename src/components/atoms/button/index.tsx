@@ -13,11 +13,12 @@ interface IProps {
   weight?: number;
   color?: ColorType;
   size?: number;
-  bgColor?: ColorType | "none";
+  bgColor?: ColorType | "transparent";
   radius?: number;
   margin?: [number, number?, number?, number?];
   padding?: [number, number?, number?, number?];
   disabled?: boolean;
+  outline?: ColorType | "none";
   style?: object;
 }
 
@@ -28,12 +29,13 @@ const Button: React.FC<IProps> = ({
   weight = 300,
   color = ColorPalette.Black.BLACK,
   size = 12,
-  bgColor = "none",
+  bgColor = "transparent",
   radius = 0,
   margin = [0],
   padding = [0],
   onClick,
   disabled = false,
+  outline = "none",
   style,
 }) => {
   const classProps = classNames(styles.default, className);
@@ -46,6 +48,7 @@ const Button: React.FC<IProps> = ({
     borderRadius: radius,
     margin: CalculateBox(margin),
     padding: CalculateBox(padding),
+    border: `1px solid ${outline}`,
   };
   let clickEvent = isCapture ? { onClickCapture: onClick } : { onClick };
 

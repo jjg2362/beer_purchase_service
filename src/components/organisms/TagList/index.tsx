@@ -14,20 +14,13 @@ interface IProps {
 const TagList: React.FC<IProps> = memo(
   ({ tagList, selectedTagLists, onClickTag }) => {
     const renderTagItem = (item: ITag, index: number) => {
-      const selectedIndex = selectedTagLists.findIndex(
-        (v) => v.name === item.name
-      );
+      const isSelected =
+        selectedTagLists.findIndex((v) => v.name === item.name) > -1;
       return (
         <Button
-          bgColor={
-            selectedIndex > -1
-              ? ColorPalette.Blue.BLUE
-              : ColorPalette.White.WHITE
-          }
+          bgColor={isSelected ? ColorPalette.Blue.BLUE : "transparent"}
           color={
-            selectedIndex > -1
-              ? ColorPalette.White.WHITE
-              : ColorPalette.Blue.SKY
+            isSelected ? ColorPalette.White.WHITE : ColorPalette.Blue.LIGHT
           }
           size={12}
           weight={300}
@@ -35,6 +28,7 @@ const TagList: React.FC<IProps> = memo(
           radius={4}
           margin={index < tagList.length - 1 ? [0, 5, 0, 0] : [0]}
           onClick={() => onClickTag(item)}
+          outline={isSelected ? "none" : ColorPalette.Blue.SKY}
         >
           {item.name}
         </Button>

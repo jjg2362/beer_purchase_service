@@ -4,4 +4,5 @@
   background: none;
   cursor: pointer;
   word-break: keep-all;
+  transition: all 0.3s ease;
 }
