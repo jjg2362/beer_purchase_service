@@ -7,6 +7,7 @@ import BeerList from "../components/templates/beerList";
 import Block, { Direction } from "../components/molecules/block";
 import { ColorPalette } from "../models/color";
 import Header from "../components/organisms/header";
+import BeerCart from "../components/templates/beerCart";
 
 const INCREASE_BEER_COUNT = 5;
 
@@ -162,17 +163,25 @@ const AddBeerPage: React.FC = () => {
         onClickListButton={onClickListButton}
       />
       <Block direction={Direction.COLUMN} padding={[10, 0]}>
-        <BeerList
-          beerList={beerList}
-          tagList={tagList}
-          selectedTagLists={selectedTagLists}
-          displayedBeerCount={displayedBeerCount}
-          myCart={myCart}
-          onAddItem={onAddItem}
-          onSubItem={onSubItem}
-          onClickTag={onClickTag}
-          onClickMoreButton={onClickMoreButton}
-        />
+        {pageState === EPageState.LIST ? (
+          <BeerList
+            beerList={beerList}
+            tagList={tagList}
+            selectedTagLists={selectedTagLists}
+            displayedBeerCount={displayedBeerCount}
+            myCart={myCart}
+            onAddItem={onAddItem}
+            onSubItem={onSubItem}
+            onClickTag={onClickTag}
+            onClickMoreButton={onClickMoreButton}
+          />
+        ) : (
+          <BeerCart
+            beerList={beerList}
+            myCart={myCart}
+            onClickCancelButton={onClickCancelButton}
+          />
+        )}
       </Block>
     </Block>
   );

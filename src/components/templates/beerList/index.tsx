@@ -69,7 +69,7 @@ const BeerList: React.FC<IProps> = ({
     [beerList, selectedTagLists, displayedBeerCount]
   );
 
-  const renderListCard = (item: IBeer) => {
+  const renderCard = (item: IBeer) => {
     const foundCartIndex = myCart.findIndex((v) => v.id === item.id);
     const count = foundCartIndex > -1 ? myCart[foundCartIndex].count : 0;
     const stock =
@@ -142,7 +142,7 @@ const BeerList: React.FC<IProps> = ({
       <Block direction={Direction.COLUMN}>
         <Block style={{ width: "95%" }} direction={Direction.COLUMN}>
           {filteredBeerLists !== undefined &&
-            filteredBeerLists.map((item) => renderListCard(item))}
+            filteredBeerLists.map((item) => renderCard(item))}
         </Block>
         {beerList.length > displayedBeerCount && (
           <Button
