@@ -1,81 +1,66 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import { IBeer, ITag, EPageState } from "../models/types";
+import { IBeer, ITag, EPageState, IPurchaseItem } from "../models/types";
 import useFetchBeers from "../hooks/useFetchBeers";
 import useFetchTags from "../hooks/useFetchTags";
-import AddBeer from "../components/templates/addBeer";
+import BeerList from "../components/templates/beerList";
+import Block, { Direction } from "../components/molecules/block";
+import { ColorPalette } from "../models/color";
+import Header from "../components/organisms/header";
 
 const INCREASE_BEER_COUNT = 5;
 
 const AddBeerPage: React.FC = () => {
   const { beerList } = useFetchBeers();
   const { tagList } = useFetchTags();
-  const [selectedTagLists, setSelectedTagLists] = useState<ITag[] | null>(null);
-  const [sortedBeerLists, setSortedBeerLists] = useState<IBeer[]>([]);
+  const [selectedTagLists, setSelectedTagLists] = useState<ITag[]>([]);
   const [displayedBeerCount, setDisplayedBeerCount] =
     useState<number>(INCREASE_BEER_COUNT);
   const [pageState, setPageState] = useState<EPageState>(EPageState.LIST);
-
-  /*
-  selectedTagLists 또는 beerList 변경시 선택된 태그에 따라 priority값 변경한 객체를 sortedBeerLists에 할당
-  */
-  const sortBeerList = useCallback(
-    (tagLists: ITag[]) => {
-      if (tagLists && beerList && tagLists.length > 0 && beerList.length > 0) {
-        const lists = beerList.map((item) => {
-          let priority = 0;
-          item.tags.forEach((beerTag) => {
-            const isTagged = tagLists.find((selectedTag) =>
-              selectedTag.name.match(beerTag.name)
-            );
-            if (isTagged !== undefined) {
-              ++priority;
-            }
-          });
-          return { ...item, priority };
-        });
-
-        setSortedBeerLists(
-          lists
-            .filter((v) => v.priority > 0)
-            .sort((a, b) => {
-              return b.priority! - a.priority!;
-            })
-        );
-      }
-    },
-    [beerList]
-  );
+  const [myCart, setMyCart] = useState<IPurchaseItem[]>([]);
 
   /*
   선택된 태그 리스트(selectedTagLists) 초기화
   모두 선택된 태그로 초기화
   */
   useEffect(() => {
-    if (tagList !== undefined) {
+    if (tagList !== null) {
       const lists = [...tagList];
       setSelectedTagLists(lists);
-      sortBeerList(lists);
     }
-  }, [tagList, sortBeerList]);
+  }, [tagList]);
 
   /*
   담기 버튼 클릭시 동작
   */
   const onAddItem = useCallback(
     (item: IBeer) => {
-      const stock = item.stock - 1;
-      if (stock >= 0) {
-        const lists = sortedBeerLists.map((beerItem) => {
-          if (beerItem.id === item.id) {
-            return { ...beerItem, stock, count: item.count! + 1 };
+      if (beerList !== null) {
+        const foundBeer = beerList.find((v) => v.id === item.id);
+
+        if (foundBeer !== undefined) {
+          const cart = [...myCart];
+          const foundCartIndex = cart.findIndex((v) => v.id === item.id);
+
+          if (foundCartIndex > -1) {
+            const stock = foundBeer.stock - cart[foundCartIndex].count;
+
+            if (stock > 0) {
+              const count = ++cart[foundCartIndex].count;
+              cart[foundCartIndex].count = count;
+              setMyCart(cart);
+            }
+          } else {
+            const stock = foundBeer.stock - 1;
+            if (stock > 0) {
+              cart.push({ id: item.id, count: 1 });
+              setMyCart(cart);
+            }
           }
-          return beerItem;
-        });
-        setSortedBeerLists(lists);
+        }
       }
     },
-    [sortedBeerLists]
+    [beerList, myCart]
   );
 
   /*
@@ -83,21 +68,18 @@ const AddBeerPage: React.FC = () => {
   */
   const onSubItem = useCallback(
     (item: IBeer) => {
-      if (item.count! > 0) {
-        const lists = sortedBeerLists.map((beerItem) => {
-          if (beerItem.id === item.id) {
-            return {
-              ...beerItem,
-              stock: item.stock + 1,
-              count: item.count! - 1,
-            };
-          }
-          return beerItem;
-        });
-        setSortedBeerLists(lists);
+      let cart = [...myCart];
+      const foundCartIndex = myCart.findIndex((v) => v.id === item.id);
+      const count = --myCart[foundCartIndex].count;
+
+      if (count > 0) {
+        cart[foundCartIndex].count = count;
+      } else {
+        cart.splice(foundCartIndex, 1);
       }
+      setMyCart(cart);
     },
-    [sortedBeerLists]
+    [myCart]
   );
 
   /*
@@ -119,10 +101,9 @@ const AddBeerPage: React.FC = () => {
         }
         setSelectedTagLists(tagLists);
         setDisplayedBeerCount(INCREASE_BEER_COUNT);
-        sortBeerList(tagLists);
       }
     },
-    [selectedTagLists, sortBeerList]
+    [selectedTagLists]
   );
 
   /*
@@ -132,6 +113,24 @@ const AddBeerPage: React.FC = () => {
   const onClickMoreButton = useCallback(() => {
     setDisplayedBeerCount(displayedBeerCount + INCREASE_BEER_COUNT);
   }, [displayedBeerCount]);
+
+  const onClickCancelButton = useCallback((item: IBeer) => {
+    // if (sortedBeerLists !== null) {
+    //   const lists = sortedBeerLists.map((beerItem) => {
+    //     if (beerItem.id === item.id) {
+    //       const stock = item.stock + item.count!;
+    //       const count = 0;
+    //       return {
+    //         ...beerItem,
+    //         stock,
+    //         count,
+    //       };
+    //     }
+    //     return beerItem;
+    //   });
+    //   setSortedBeerLists(lists);
+    // }
+  }, []);
 
   const onClickCartButton = useCallback(() => {
     if (pageState !== EPageState.CART) {
@@ -146,24 +145,36 @@ const AddBeerPage: React.FC = () => {
   }, [pageState]);
 
   return (
-    <>
-      {tagList !== undefined && selectedTagLists !== null && (
-        <AddBeer
-          pageState={pageState}
-          totalBeerCount={sortedBeerLists.filter((v) => v.count! > 0).length}
-          beerList={sortedBeerLists}
+    <Block
+      direction={Direction.COLUMN}
+      sort={12}
+      style={{
+        width: "100%",
+        maxWidth: "540px",
+        minHeight: "100vh",
+        backgroundColor: ColorPalette.Gray.GAINSBORO,
+      }}
+    >
+      <Header
+        pageState={pageState}
+        beerCount={myCart.length}
+        onClickCartButton={onClickCartButton}
+        onClickListButton={onClickListButton}
+      />
+      <Block direction={Direction.COLUMN} padding={[10, 0]}>
+        <BeerList
+          beerList={beerList}
           tagList={tagList}
           selectedTagLists={selectedTagLists}
           displayedBeerCount={displayedBeerCount}
-          onClickCartButton={onClickCartButton}
-          onClickListButton={onClickListButton}
+          myCart={myCart}
           onAddItem={onAddItem}
           onSubItem={onSubItem}
           onClickTag={onClickTag}
           onClickMoreButton={onClickMoreButton}
         />
-      )}
-    </>
+      </Block>
+    </Block>
   );
 };
 

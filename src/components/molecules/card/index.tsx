@@ -8,10 +8,12 @@ import Block, { Direction } from "../block";
 
 interface IProps {
   beer: IBeer;
-  Buttons: React.ReactNode[];
+  stock?: number;
+  count: number;
+  ButtonElements: React.ReactNode[];
 }
 
-const Card: React.FC<IProps> = ({ beer, Buttons }) => {
+const Card: React.FC<IProps> = ({ beer, stock, count, ButtonElements }) => {
   return (
     <Block
       direction={Direction.COLUMN}
@@ -60,18 +62,22 @@ const Card: React.FC<IProps> = ({ beer, Buttons }) => {
             <Span weight={400}>원</Span>
           </Block>
           <Block sort={21}>
-            <Span
-              color={ColorPalette.Black.LIGHT}
-              size={14}
-              margin={[0, 4, 0, 0]}
-            >
-              재고
-            </Span>
-            <Span color={ColorPalette.Black.LIGHT} size={14} weight={400}>
-              {beer.stock}
-            </Span>
+            {stock !== undefined && (
+              <>
+                <Span
+                  color={ColorPalette.Black.LIGHT}
+                  size={14}
+                  margin={[0, 4, 0, 0]}
+                >
+                  재고
+                </Span>
+                <Span color={ColorPalette.Black.LIGHT} size={14} weight={400}>
+                  {stock}
+                </Span>
+              </>
+            )}
 
-            {beer.count !== undefined && beer.count > 0 && (
+            {count > 0 && (
               <>
                 <Span
                   color={ColorPalette.Black.LIGHT}
@@ -81,14 +87,14 @@ const Card: React.FC<IProps> = ({ beer, Buttons }) => {
                   수량
                 </Span>
                 <Span color={ColorPalette.Black.LIGHT} size={14} weight={400}>
-                  {beer.count}
+                  {count}
                 </Span>
               </>
             )}
           </Block>
         </Block>
       </Block>
-      <Block sort={13}>{Buttons.map((button) => button)}</Block>
+      <Block sort={13}>{ButtonElements.map((button) => button)}</Block>
     </Block>
   );
 };
