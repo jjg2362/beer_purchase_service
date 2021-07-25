@@ -1,7 +1,7 @@
 import React from "react";
 import { useMemo } from "react";
 import { ColorPalette } from "../../../models/color";
-import { IBeer, IPurchaseItem } from "../../../models/types";
+import { IBeer, IPurchaseItem, IPurchaseResult } from "../../../models/types";
 import Button from "../../atoms/button";
 import Span, { TextAlign } from "../../atoms/span";
 import Block, { Direction } from "../../molecules/block";
@@ -21,6 +21,29 @@ const filterBeerList = (beerLists: IBeer[], myCart: IPurchaseItem[]) => {
   });
 };
 
+const getTotalPrice = (
+  beerLists: IBeer[],
+  myCart: IPurchaseItem[]
+): IPurchaseResult => {
+  const result = {
+    totalCount: 0,
+    totalPrice: 0,
+  };
+
+  myCart.forEach((item) => {
+    const foundBeer = beerLists.find((v) => v.id === item.id);
+
+    if (foundBeer !== undefined) {
+      const count = item.count + result.totalCount;
+      const price = foundBeer.price * item.count + result.totalPrice;
+      result.totalCount = count;
+      result.totalPrice = price;
+    }
+  });
+
+  return result;
+};
+
 const BeerCart: React.FC<IProps> = ({
   beerList,
   myCart,
@@ -29,6 +52,10 @@ const BeerCart: React.FC<IProps> = ({
 }) => {
   const filteredBeerLists = useMemo(
     () => filterBeerList(beerList, myCart),
+    [beerList, myCart]
+  );
+  const totalPrice = useMemo(
+    () => getTotalPrice(beerList, myCart),
     [beerList, myCart]
   );
 
@@ -143,9 +170,55 @@ const BeerCart: React.FC<IProps> = ({
     <Block direction={Direction.COLUMN}>
       <Block style={{ width: "95%" }} direction={Direction.COLUMN}>
         {/* 카트가 비어있다면 빈 카트 UI 출력 */}
-        {filteredBeerLists.length > 0
-          ? filteredBeerLists.map((item) => renderCard(item))
-          : renderEmpty()}
+        {filteredBeerLists.length > 0 ? (
+          <>
+            {filteredBeerLists.map((item) => renderCard(item))}
+            <Block direction={Direction.COLUMN} margin={[10, 0, 0, 0]}>
+              <Block sort={23}>
+                <Span
+                  size={20}
+                  color={ColorPalette.Gray.DARK}
+                  margin={[0, 2, 0, 0]}
+                >
+                  총 구매수량
+                </Span>
+                <Span
+                  size={20}
+                  color={ColorPalette.Blue.STALE}
+                  margin={[0, 3, 0, 0]}
+                  weight={700}
+                >
+                  {totalPrice.totalCount}
+                </Span>
+                <Span size={20} color={ColorPalette.Gray.DARK}>
+                  개
+                </Span>
+              </Block>
+              <Block sort={23} margin={[5, 0, 0, 0]}>
+                <Span
+                  size={20}
+                  color={ColorPalette.Gray.DARK}
+                  margin={[0, 2, 0, 0]}
+                >
+                  총 결제금액
+                </Span>
+                <Span
+                  size={20}
+                  color={ColorPalette.Blue.STALE}
+                  margin={[0, 3, 0, 0]}
+                  weight={700}
+                >
+                  {totalPrice.totalPrice}
+                </Span>
+                <Span size={20} color={ColorPalette.Gray.DARK}>
+                  원
+                </Span>
+              </Block>
+            </Block>
+          </>
+        ) : (
+          renderEmpty()
+        )}
       </Block>
     </Block>
   );
