@@ -47,7 +47,8 @@ const TagList: React.FC<IProps> = memo(
         margin={[0, 0, 10, 0]}
         padding={[0, 0, 0, 20]}
       >
-        {tagList.map((item, index) => renderTagItem(item, index))}
+        {tagList.length > 0 &&
+          tagList.map((item, index) => renderTagItem(item, index))}
       </Scrollable>
     );
   }

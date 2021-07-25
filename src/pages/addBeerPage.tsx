@@ -1,19 +1,27 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import { IBeer, ITag, EPageState, IPurchaseItem } from "../models/types";
+import {
+  IBeer,
+  ITag,
+  EPageState,
+  IPurchaseItem,
+  IPurchaseResult,
+} from "../models/types";
+import { ColorPalette } from "../models/color";
 import useFetchBeers from "../hooks/useFetchBeers";
 import useFetchTags from "../hooks/useFetchTags";
-import BeerList from "../components/templates/beerList";
+import usePurchase from "../hooks/usePurchase";
 import Block, { Direction } from "../components/molecules/block";
-import { ColorPalette } from "../models/color";
-import Header from "../components/organisms/header";
+import BeerList from "../components/templates/beerList";
 import BeerCart from "../components/templates/beerCart";
+import Header from "../components/organisms/header";
 
 const INCREASE_BEER_COUNT = 5;
 
 const AddBeerPage: React.FC = () => {
   const { beerList } = useFetchBeers();
   const { tagList } = useFetchTags();
+  const { onPurchase } = usePurchase();
   const [selectedTagLists, setSelectedTagLists] = useState<ITag[]>([]);
   const [displayedBeerCount, setDisplayedBeerCount] =
     useState<number>(INCREASE_BEER_COUNT);
@@ -25,7 +33,7 @@ const AddBeerPage: React.FC = () => {
   모두 선택된 태그로 초기화
   */
   useEffect(() => {
-    if (tagList !== null) {
+    if (tagList !== null && tagList.length > 0) {
       const lists = [...tagList];
       setSelectedTagLists(lists);
     }
@@ -128,17 +136,31 @@ const AddBeerPage: React.FC = () => {
     [myCart]
   );
 
+  //카트로 이동
   const onClickCartButton = useCallback(() => {
     if (pageState !== EPageState.CART) {
       setPageState(EPageState.CART);
     }
   }, [pageState]);
 
+  //맥주 리스트로 이동
   const onClickListButton = useCallback(() => {
     if (pageState !== EPageState.LIST) {
       setPageState(EPageState.LIST);
     }
   }, [pageState]);
+
+  /*
+  구매하기 버튼 클릭시 작동
+  */
+  const onClickPurchaseButton = useCallback(
+    (purchaseItems: IPurchaseItem[], beerLists: IBeer[]) => {
+      const result = onPurchase(purchaseItems, beerLists);
+      console.log(result);
+      setMyCart([]);
+    },
+    [onPurchase]
+  );
 
   return (
     <Block
@@ -176,6 +198,7 @@ const AddBeerPage: React.FC = () => {
             myCart={myCart}
             onClickCancelButton={onClickCancelButton}
             onClickListButton={onClickListButton}
+            onClickPurchaseButton={onClickPurchaseButton}
           />
         )}
       </Block>

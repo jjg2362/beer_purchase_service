@@ -24,33 +24,35 @@ const sortBeerLists = (
   tagLists: ITag[],
   displayedBeerCount: number
 ) => {
-  const lists = beerLists.map((item) => {
-    let priority = 0;
-    item.tags.forEach((beerTag) => {
-      const isTagged = tagLists.find((selectedTag) =>
-        selectedTag.name.match(beerTag.name)
-      );
-      if (isTagged !== undefined) {
-        ++priority;
-      }
+  if (beerLists.length > 0) {
+    const lists = beerLists.map((item) => {
+      let priority = 0;
+      item.tags.forEach((beerTag) => {
+        const isTagged = tagLists.find((selectedTag) =>
+          selectedTag.name.match(beerTag.name)
+        );
+        if (isTagged !== undefined) {
+          ++priority;
+        }
+      });
+      return { ...item, priority };
     });
-    return { ...item, priority };
-  });
 
-  return lists
-    .filter((v) => v.priority > 0)
-    .sort((a, b) => {
-      return a.id - b.id;
-    })
-    .sort((a, b) => {
-      return b.priority! - a.priority!;
-    })
-    .slice(
-      0,
-      displayedBeerCount > beerLists.length
-        ? beerLists.length
-        : displayedBeerCount
-    );
+    return lists
+      .filter((v) => v.priority > 0)
+      .sort((a, b) => {
+        return a.id - b.id;
+      })
+      .sort((a, b) => {
+        return b.priority! - a.priority!;
+      })
+      .slice(
+        0,
+        displayedBeerCount > beerLists.length
+          ? beerLists.length
+          : displayedBeerCount
+      );
+  }
 };
 
 const BeerList: React.FC<IProps> = ({

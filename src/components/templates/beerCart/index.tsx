@@ -12,13 +12,19 @@ interface IProps {
   myCart: IPurchaseItem[];
   onClickCancelButton(item: IBeer): void;
   onClickListButton(): void;
+  onClickPurchaseButton(
+    purchaseItems: IPurchaseItem[],
+    beerLists: IBeer[]
+  ): void;
 }
 
 const filterBeerList = (beerLists: IBeer[], myCart: IPurchaseItem[]) => {
-  return beerLists.filter((beer) => {
-    const isFound = myCart.findIndex((cart) => cart.id === beer.id) > -1;
-    return isFound && beer;
-  });
+  if (beerLists.length > 0) {
+    return beerLists.filter((beer) => {
+      const isFound = myCart.findIndex((cart) => cart.id === beer.id) > -1;
+      return isFound && beer;
+    });
+  }
 };
 
 const getTotalPrice = (
@@ -49,6 +55,7 @@ const BeerCart: React.FC<IProps> = ({
   myCart,
   onClickCancelButton,
   onClickListButton,
+  onClickPurchaseButton,
 }) => {
   const filteredBeerLists = useMemo(
     () => filterBeerList(beerList, myCart),
@@ -170,15 +177,15 @@ const BeerCart: React.FC<IProps> = ({
     <Block direction={Direction.COLUMN}>
       <Block style={{ width: "95%" }} direction={Direction.COLUMN}>
         {/* 카트가 비어있다면 빈 카트 UI 출력 */}
-        {filteredBeerLists.length > 0 ? (
+        {filteredBeerLists !== undefined && filteredBeerLists.length > 0 ? (
           <>
             {filteredBeerLists.map((item) => renderCard(item))}
-            <Block direction={Direction.COLUMN} margin={[10, 0, 0, 0]}>
+            <Block direction={Direction.COLUMN} margin={[20, 0, 0, 0]}>
               <Block sort={23}>
                 <Span
                   size={20}
                   color={ColorPalette.Gray.DARK}
-                  margin={[0, 2, 0, 0]}
+                  margin={[0, 4, 0, 0]}
                 >
                   총 구매수량
                 </Span>
@@ -194,11 +201,11 @@ const BeerCart: React.FC<IProps> = ({
                   개
                 </Span>
               </Block>
-              <Block sort={23} margin={[5, 0, 0, 0]}>
+              <Block sort={23} margin={[8, 0, 0, 0]}>
                 <Span
                   size={20}
                   color={ColorPalette.Gray.DARK}
-                  margin={[0, 2, 0, 0]}
+                  margin={[0, 4, 0, 0]}
                 >
                   총 결제금액
                 </Span>
@@ -214,6 +221,20 @@ const BeerCart: React.FC<IProps> = ({
                   원
                 </Span>
               </Block>
+
+              <Button
+                bgColor={ColorPalette.Blue.BLUE}
+                color={ColorPalette.White.WHITE}
+                padding={[10, 0]}
+                radius={4}
+                size={20}
+                weight={300}
+                style={{ width: "100%" }}
+                margin={[20, 0, 0, 0]}
+                onClick={() => onClickPurchaseButton(myCart, filteredBeerLists)}
+              >
+                구매하기
+              </Button>
             </Block>
           </>
         ) : (
